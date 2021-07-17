@@ -1,0 +1,141 @@
+openapi: 3.0.0
+info:
+  title: Документация к REST-API
+  version: "1.0"
+servers:
+  - url: "https://desire-analytics.cf/api/v1"
+    description: Demo API Server
+paths:
+  /sites:
+    post:
+      tags:
+        - Сайты
+      summary: Добавление сайта
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SiteSchema"
+      responses:
+        "201":
+          description: Everything is fine
+        "422":
+          description: The given data was invalid
+    get:
+      tags:
+        - Сайты
+      summary: Получение списка сайтов
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/SiteSchema"
+        "422":
+          description: The given data was invalid
+  /sites/{siteId}:
+    get:
+      tags:
+        - Сайты
+      summary: Получение сайта по id
+      parameters:
+        - in: path
+          name: siteId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the site to get
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteSchema"
+        "422":
+          description: The given data was invalid
+    put:
+      tags:
+        - Сайты
+      summary: Обновление сайта по id
+      parameters:
+        - in: path
+          name: siteId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the site to get
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SiteSchema"
+      responses:
+        "200":
+          description: Everything is fine
+        "422":
+          description: The given data was invalid
+    delete:
+      tags:
+        - Сайты
+      summary: Удаление сайта по id
+      parameters:
+        - in: path
+          name: siteId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the site to get
+      responses:
+        "200":
+          description: Everything is fine
+        "422":
+          description: The given data was invalid
+components:
+  schemas:
+    SiteSchema:
+      description: Модель сайта
+      type: object
+      properties:
+        id:
+          description: Id сайта
+          type: string
+          example: "0026059e-8030-419f-8e12-b0c3c1e60d76"
+        domain:
+          description: Домен
+          type: string
+          example: "glas.ru"
+        views:
+          description: Показы
+          type: number
+          example: 999999999
+        dataCollection:
+          description: Сбор данных
+          type: boolean
+          example: true
+        monetization:
+          description: Монетизация
+          type: boolean
+          example: true
+        recommendations:
+          description: Рекомендации
+          type: boolean
+          example: true
+        comments:
+          description: Комментарии
+          type: boolean
+          example: true
+        reactions:
+          description: Реакции
+          type: boolean
+          example: true
+        push:
+          description: Push
+          type: boolean
+          example: true
